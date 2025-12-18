@@ -3,16 +3,16 @@ detect_ball:
     # tuning_mode: false # Could set this here but leave it off so it can be easily set by the launch script
     x_min: 0
     x_max: 100
-    y_min: 32
+    y_min: 23
     y_max: 100
-    h_min: 20
-    h_max: 37
-    s_min: 42
+    h_min: 27
+    h_max: 43
+    s_min: 23
     s_max: 255
     v_min: 0
     v_max: 255
     sz_min: 0
-    sz_max: 20
+    sz_max: 25
 
 detect_ball_3d:
   ros__parameters:
