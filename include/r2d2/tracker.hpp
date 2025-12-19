@@ -11,6 +11,7 @@ public:
   constexpr static float MIN_ANG_VEL = 0.15f;
   constexpr static float MAX_ANG_VEL = 0.5f;
   constexpr static float ANGULAR_GAIN = 1.7f;
+  constexpr static float SEARCH_ANG_VEL = 0.3f;
 
   Tracker();
 
@@ -18,10 +19,13 @@ private:
   void _imageCallback(const sensor_msgs::msg::Image::SharedPtr msg);
   void _initTracker(cv::Mat frame, cv::Rect obj);
   void _designateControl(geometry_msgs::msg::Twist &vel_msg, cv::Rect obj, uint32_t img_width);
+  cv::Rect _searchForObject(const cv::Mat& frame);
 
   rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr _img_sub;
   rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr _visualization_pub;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr _vel_pub;
   cv::Ptr<cv::Tracker> _tracker;
   bool _is_tracker_initialized;
+  cv::Mat _object_template;
+  bool _is_searching;
 };
