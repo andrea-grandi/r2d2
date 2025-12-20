@@ -8,7 +8,7 @@ endif()
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -32,6 +32,7 @@ find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
+find_package(ament_index_cpp REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -50,6 +51,30 @@ set_target_properties(tracker PROPERTIES
   BUILD_WITH_INSTALL_RPATH TRUE
 )
 
+add_executable(tracker_v2 src/tracker_v2.cpp)
+ament_target_dependencies(tracker_v2 rclcpp cv_bridge geometry_msgs sensor_msgs std_msgs)
+target_link_libraries(tracker_v2 ${OpenCV_LIBS})
+set_target_properties(tracker_v2 PROPERTIES
+  INSTALL_RPATH "/home/andreagrandi/build/lib"
+  BUILD_WITH_INSTALL_RPATH TRUE
+)
+
+add_executable(tracker_ml src/tracker_ml.cpp)
+ament_target_dependencies(tracker_ml rclcpp cv_bridge geometry_msgs sensor_msgs std_msgs ament_index_cpp)
+target_link_libraries(tracker_ml ${OpenCV_LIBS} stdc++fs)
+set_target_properties(tracker_ml PROPERTIES
+  INSTALL_RPATH "/home/andreagrandi/build/lib"
+  BUILD_WITH_INSTALL_RPATH TRUE
+)
+
+add_executable(tracker_color src/tracker_color.cpp)
+ament_target_dependencies(tracker_color rclcpp cv_bridge geometry_msgs sensor_msgs std_msgs ament_index_cpp)
+target_link_libraries(tracker_color ${OpenCV_LIBS} stdc++fs)
+set_target_properties(tracker_color PROPERTIES
+  INSTALL_RPATH "/home/andreagrandi/build/lib"
+  BUILD_WITH_INSTALL_RPATH TRUE
+)
+
 #if(BUILD_TESTING)
 #  find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -63,11 +88,19 @@ set_target_properties(tracker PROPERTIES
 
 install (TARGETS
   tracker
+  tracker_v2
+  tracker_ml
+  tracker_color
   DESTINATION lib/${PROJECT_NAME}
 )
 
 install(
   DIRECTORY config description launch worlds maps
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY training_images
   DESTINATION share/${PROJECT_NAME}
 )
 

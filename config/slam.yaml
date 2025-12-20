@@ -16,8 +16,8 @@ slam:
     scan_topic: /scan
     mode: localization
     
-    #map_start_at_dock: true
-    #map_file_name: /home/andreagrandi/dev_ws/src/r2d2/maps/map_serial
+    map_start_at_dock: true
+    map_file_name: /home/andreagrandi/dev_ws/src/r2d2/maps/map_serial
 
     debug_logging: false
     throttle_scans: 1

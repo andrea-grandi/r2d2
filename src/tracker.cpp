@@ -11,7 +11,7 @@ Tracker::Tracker() : Node("tracker"), _is_tracker_initialized(false), _is_search
 
   // Publishers
   _visualization_pub = create_publisher<sensor_msgs::msg::Image>("/visualization", rclcpp::SensorDataQoS());
-  _vel_pub = create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", rclcpp::SystemDefaultsQoS());
+  _vel_pub = create_publisher<geometry_msgs::msg::Twist>("/cmd_vel_tracker", rclcpp::SystemDefaultsQoS());
 
   RCLCPP_INFO(get_logger(), "Node started!");
 }
